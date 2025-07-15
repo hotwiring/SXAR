@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SXAR</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: black;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .typing {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #00ff88;
+      z-index: 2;
+      position: relative;
+    }
+
+    #particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes slideFadeIn {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    nav {
+      background: #222;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.3s; }
+    section:nth-of-type(2) { animation-delay: 0.6s; }
+    section:nth-of-type(3) { animation-delay: 0.9s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .product {
+      background: black;
+      border-radius: 10px;
+      padding: 15px;
+      width: 220px;
+      text-align: center;
+      color: white;
+      animation: popIn 0.8s ease forwards;
+      opacity: 0;
+      transform: scale(0.9);
+      border: 2px solid #00ff88;
+      box-shadow: 0 0 10px #00ff88, 0 0 20px #00c6ff inset;
+    }
+
+    @keyframes popIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .product img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      animation: floatImage 3s ease-in-out infinite;
+    }
+
+    @keyframes floatImage {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .product img:hover {
+      transform: scale(1.1);
+    }
+
+    .product h3 { margin-top: 10px; }
+    .product p { margin: 5px 0; }
+
+    .contact {
+      text-align: center;
+      padding: 40px;
+      background: #eee;
+      border-radius: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: black;
+      color: white;
+    }
+
+    .music-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #222;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    #player {
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+    }
+
+    .logo-spin-glow {
+      height: 100px;
+      animation: spin 5s linear infinite, glowPulse 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 10px #00ff88) drop-shadow(0 0 20px #00ff88);
+      transition: transform 0.3s ease;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 10px #00ff88) drop-shadow(0 0 20px #00ff88);
+      }
+      50% {
+        filter: drop-shadow(0 0 20px #00ff88) drop-shadow(0 0 40px #00ff88);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <canvas id="particles"></canvas>
+  <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; z-index: 2; position: relative;">
+    <img src="Y2K_aesthetic_brand_graphics_-_design_collection_-_2000s___1_-removebg-preview.png" alt="SXAR Logo" class="logo-spin-glow" />
+    <p class="typing" id="typed-text"></p>
+  </div>
+</header>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#shop">Shop</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="home">
+  <h2>Welcome to SXAR</h2>
+  <p>We sell authentic and affordable gear – from AirPods to LV drip.</p>
+</section>
+
+<section id="shop">
+  <h2>Shop Products</h2>
+  <div class="products">
+
+    <div class="product">
+      <img src="Airpods.jpg" alt="AirPods" />
+      <h3>AirPods</h3>
+      <p>$30</p>
+      <div id="paypal-button-airpods"></div>
+    </div>
+
+    <div class="product">
+      <img src="Cortez.JPG" alt="Corteiz" />
+      <h3>Corteiz</h3>
+      <p>$30</p>
+      <div id="paypal-button-corteiz"></div>
+    </div>
+
+    <div class="product">
+      <img src="LV Beanie.JPG" alt="LV Beanie" />
+      <h3>LV Beanie</h3>
+      <p>$20</p>
+      <div id="paypal-button-lvbeanie"></div>
+    </div>
+
+    <div class="product">
+      <img src="how-much-do-you-think-youve-spent-on-soccer-jerseys-in-your-v0-jy60j220vp8c1.webp" alt="Soccer Jersey" />
+      <h3>Soccer Jersey</h3>
+      <p>$30</p>
+      <div id="paypal-button-soccer"></div>
+    </div>
+
+    <div class="product">
+      <img src="hellstar tee.jpg" alt="Hellstar" />
+      <h3>Hellstar</h3>
+      <p>$35</p>
+      <div id="paypal-button-hellstar"></div>
+    </div>
+
+    <div class="product">
+      <img src="hellstar pink.png" alt="Hellstar Pink" />
+      <h3>Hellstar Pink</h3>
+      <p>$35</p>
+      <div id="paypal-button-hellstarpink"></div>
+    </div>
+
+    <div class="product">
+      <img src="Jean Paul Gaulrtier.jfif" alt="Jean Paul Gaultier" />
+      <h3>Jean Paul Gaultier</h3>
+      <p>$50</p>
+      <div id="paypal-button-jpg"></div>
+    </div>
+
+    <div class="product">
+      <img src="gallery-dept-shirt.PNG" alt="Gallery Dept Shirt" />
+      <h3>Gallery Dept Shirt</h3>
+      <p>$45</p>
+      <div id="paypal-button-gdshirt"></div>
+    </div>
+
+    <div class="product">
+      <img src="gallery-dept-hat.PNG" alt="Gallery Dept Hat" />
+      <h3>Gallery Dept Hat</h3>
+      <p>$25</p>
+      <div id="paypal-button-gdhat"></div>
+    </div>
+
+    <div class="product">
+      <img src="essentials-shirt.PNG" alt="Essentials Shirt" />
+      <h3>Essentials Shirt</h3>
+      <p>$30</p>
+      <div id="paypal-button-essshirt"></div>
+    </div>
+
+
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <h2>Contact Us</h2>
+  <p>📩 DM us on Instagram: <strong>@RezWrstt</strong></p>
+  <p>📧 Or message for manual payment options</p>
+</section>
+
+<footer>
+  <p>&copy; 2025 SXAR. All rights reserved.</p>
+</footer>
+
+<!-- Typing Effect -->
+<script>
+  const text = "🔥 Affordable Streetwear, Followers, and More 🔥";
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      document.getElementById("typed-text").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(type, 50);
+    }
+  }
+  window.onload = type;
+</script>
+
+<!-- Fire Particles -->
+<script>
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = 100;
+
+  let particles = [];
+
+  function createParticle() {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: canvas.height,
+      size: Math.random() * 4 + 1,
+      speedY: Math.random() * -2 - 1,
+      color: 'rgba(255, 100, 0, 0.7)'
+    });
+  }
+
+  function updateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p, i) => {
+      p.y += p.speedY;
+      p.size *= 0.97;
+      if (p.size < 0.5) particles.splice(i, 1);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+    });
+    if (particles.length < 100) createParticle();
+    requestAnimationFrame(updateParticles);
+  }
+
+  updateParticles();
+</script>
+
+<!-- YouTube Music Toggle -->
+<div id="player"></div>
+<button class="music-toggle" id="music-toggle">🔇</button>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  let player;
+  let musicMuted = true;
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '0',
+      width: '0',
+      videoId: 'C217vygclrk',
+      playerVars: {
+        autoplay: 1,
+        loop: 1,
+        playlist: 'C217vygclrk',
+        controls: 0,
+        mute: 1,
+        modestbranding: 1,
+        rel: 0
+      },
+      events: {
+        onReady: function(event) {
+          event.target.playVideo();
+        }
+      }
+    });
+  }
+
+  document.getElementById('music-toggle').addEventListener('click', () => {
+    if (musicMuted) {
+      player.unMute();
+      musicMuted = false;
+      document.getElementById('music-toggle').textContent = '🔈';
+    } else {
+      player.mute();
+      musicMuted = true;
+      document.getElementById('music-toggle').textContent = '🔇';
+    }
+  });
+</script>
+
+<!-- PayPal SDK + Buttons -->
+<script src="https://www.paypal.com/sdk/js?client-id=ASE8jh4szs_WozmZiSM0Qf_xDWFCWc4LsfA9dX9r7V_zDn9NJ9A95FCogBUAgwdGtck8ADTkRcfB_Sna&currency=USD&intent=authorize&commit=true"></script>
+<script>
+  function renderPayPalButton(id, description, price) {
+    paypal.Buttons({
+      style: { color: 'gold', shape: 'pill', label: 'pay', height: 40 },
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: { value: price },
+            description: description
+          }],
+          application_context: {
+            shipping_preference: "GET_FROM_FILE"
+          }
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert('✅ Payment completed by ' + details.payer.name.given_name);
+        });
+      },
+      onError: function(err) {
+        console.error('❌ PayPal error', err);
+        alert('There was an error processing your payment.');
+      }
+    }).render(`#${id}`);
+  }
+
+                     renderPayPalButton("paypal-button-airpods", "AirPods", "30.00");
+                     renderPayPalButton("paypal-button-corteiz", "Corteiz", "30.00");
+                     renderPayPalButton("paypal-button-lvbeanie", "LV Beanie", "20.00");
+                     renderPayPalButton("paypal-button-soccer", "Soccer Jersey", "30.00");
+  renderPayPalButton("paypal-button-hellstar", "Hellstar", "35.00");
+  renderPayPalButton("paypal-button-hellstarpink", "Hellstar Pink", "35.00");
+  renderPayPalButton("paypal-button-jpg", "Jean Paul Gaultier", "50.00");
+  renderPayPalButton("paypal-button-gdshirt", "Gallery Dept Shirt", "45.00");
+  renderPayPalButton("paypal-button-gdhat", "Gallery Dept Hat", "25.00");
+  renderPayPalButton("paypal-button-essshirt", "Essentials Shirt", "30.00");
+
+</script>
+
+</body>
+</html>
